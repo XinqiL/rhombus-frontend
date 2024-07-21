@@ -1,5 +1,5 @@
-import React from "react";
-import { Button } from "@mui/material";
+import React, { useState } from "react";
+import { Button, CircularProgress } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { downloadFile, uploadFile } from "../services/firebase";
@@ -18,9 +18,13 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 function FileUploader({ setFileData }) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    setIsLoading(true);
 
     try {
       const downloadUrl = await uploadFile(file);
@@ -43,6 +47,8 @@ function FileUploader({ setFileData }) {
       });
     } catch (error) {
       console.error("Error during file processing:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -53,13 +59,21 @@ function FileUploader({ setFileData }) {
         role={undefined}
         variant="contained"
         tabIndex={-1}
-        startIcon={<CloudUploadIcon />}
+        startIcon={
+          isLoading ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            <CloudUploadIcon />
+          )
+        }
+        disabled={isLoading}
       >
         Upload csv or Excel file
         <VisuallyHiddenInput
           type="file"
           accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
           onChange={handleFileUpload}
+          required
         />
       </Button>
     </div>
