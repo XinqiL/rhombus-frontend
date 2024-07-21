@@ -1,6 +1,6 @@
 # Regex Replacement Project - Frontend
 
-This README provides a detailed guide to setting up a React application using Vite with Firebase.
+This README provides a comprehensive guide for setting up a React application powered by Vite, integrated seamlessly with Firebase, including Firebase Storage.
 
 ## Prerequisites
 
@@ -37,9 +37,14 @@ const firebaseConfig = {
 };
 ```
 
+6. Initialize Firebase Storage:
+
+In the Firebase Console, navigate to the "Storage" section.
+Click on "Get started" to set up Cloud Storage for your project.
+
 ## Step3: Configure Environment Variables
 
-1. Rename the provided .env.example file to .env.
+1. Rename the provided `.env.example` file to `.env`.
    `mv .env.example .env`
 
 2. Open the .env file and fill it with your Firebase credentials:
