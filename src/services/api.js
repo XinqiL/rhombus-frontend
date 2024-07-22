@@ -1,5 +1,5 @@
 export function generateRegex(description, fileUrl) {
-  const apiUrl = "/api/generate-regex";
+  const apiUrl = `${import.meta.env.VITE_API_URL}/generate-regex`;
   const data = {
     description: description,
     file_url: fileUrl,
