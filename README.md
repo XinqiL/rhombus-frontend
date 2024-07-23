@@ -2,6 +2,11 @@
 
 This README provides a comprehensive guide for setting up a React application powered by Vite, integrated seamlessly with Firebase, including Firebase Storage.
 
+## DEMO
+
+- This app is deployed by Netlify and heroku which can be viewed at https://regexwizard.netlify.app
+- The video demo can be viewed at https://drive.google.com/file/d/1TfjuKZt4WgcbP8Uo-ykoJevBwaRTFz2p/view?usp=drive_link
+
 ## Prerequisites
 
 Before beginning, ensure you have installed:
@@ -49,13 +54,16 @@ Click on "Get started" to set up Cloud Storage for your project.
 
 2. Open the .env file and fill it with your Firebase credentials:
 
-```javascript
+```
 VITE_FIREBASE_API_KEY=your_firebase_api_key_here
 VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain_here
 VITE_FIREBASE_PROJECT_ID=your_firebase_project_id_here
 VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket_here
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_sender_id_here
-VITE_FIREBASE_APP_ID=your_firebase_app_id_here`
+VITE_FIREBASE_APP_ID=your_firebase_app_id_here
+VITE_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
+VITE_BACKEND_URL="http://localhost:8000"
+VITE_API_URL="/api"
 ```
 
 These values can be found in your Firebase project settings under the "General" tab and then under "Your apps" section.
@@ -65,7 +73,3 @@ These values can be found in your Firebase project settings under the "General" 
 `npm run dev`
 
 The application will be available at http://localhost:5173
-
-## Additional Resources
-
-The video demo can be viewed at https://drive.google.com/file/d/1OFHw1FyMgj65MYzobKUSPih0PViWGpho/view?usp=drive_link

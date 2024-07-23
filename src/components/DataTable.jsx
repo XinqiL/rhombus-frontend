@@ -36,7 +36,7 @@ const DataTable = ({ columns, rows, fileName }) => {
         {fileName}
       </Typography>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table className="min-w-64" aria-label="simple table">
           <TableHead>
             <TableRow>
               {columns.map((column, index) => (

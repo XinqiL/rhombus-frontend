@@ -4,6 +4,8 @@ import DataTable from "./components/DataTable";
 import { Paper, Typography } from "@mui/material";
 import { readFile } from "./utils/helper";
 import Form from "./components/Form";
+import ErrorDialog from "./components/ErrorDialog";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [fileData, setFileData] = useState({
@@ -12,6 +14,7 @@ function App() {
     fileName: "",
   });
   const [apiResponse, setApiResponse] = useState({
+    isLoading: false,
     success: false,
     message: "",
   });
@@ -21,6 +24,8 @@ function App() {
     rows: [],
     fileName: "",
   });
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleFetchNewData = async (newUrl) => {
     try {
@@ -43,16 +48,21 @@ function App() {
   };
 
   return (
-    <Paper elevation={3} sx={{ padding: 2, minWidth: 650 }}>
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
+    <Paper
+      className="min-h-screen p-6 min-w-[650px] overflow-auto"
+      elevation={3}
+    >
+      <Toaster position="top-center" reverseOrder={false} />
+      <Typography variant="h6" className="mb-2">
         Regex Pattern Matching and Replacement Tool
       </Typography>
-
       <Form
         fileData={fileData}
         setFileData={setFileData}
+        apiResponse={apiResponse}
         setApiResponse={setApiResponse}
         handleFetchNewData={handleFetchNewData}
+        setDialogOpen={setDialogOpen}
       />
 
       {fileData.fileName && (
@@ -63,21 +73,18 @@ function App() {
         />
       )}
 
-      {newFileData.fileName && (
-        <>
-          <Typography
-            color={apiResponse.success ? "primary" : "error"}
-            sx={{ marginTop: 4 }}
-          >
-            {apiResponse.message}
-          </Typography>
-          <DataTable
-            columns={newFileData.columns}
-            rows={newFileData.rows}
-            fileName={newFileData.fileName}
-          />
-        </>
+      {newFileData.fileName && apiResponse.success === true && (
+        <DataTable
+          columns={newFileData.columns}
+          rows={newFileData.rows}
+          fileName={newFileData.fileName}
+        />
       )}
+      <ErrorDialog
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        apiResponse={apiResponse}
+      />
     </Paper>
   );
 }

@@ -12,18 +12,16 @@ export function generateRegex(description, fileUrl) {
     },
     body: JSON.stringify(data),
   })
-    .then((response) => {
-      console.log(`HTTP Status Code: ${response.status}`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Success:", data);
-      return data;
-    })
+    .then((response) =>
+      response.json().then((data) => {
+        if (!response.ok) {
+          throw new Error(data.error || "Unknown server error");
+        }
+        return data;
+      })
+    )
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Fetch error:", error.message);
+      throw error;
     });
 }

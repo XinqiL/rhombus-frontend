@@ -8,55 +8,62 @@ import {
   Typography,
 } from "@mui/material";
 import { generateRegex } from "../services/api";
+import toast from "react-hot-toast";
 
 const Form = ({
   fileData,
   setFileData,
+  apiResponse,
   setApiResponse,
   handleFetchNewData,
+  setDialogOpen,
 }) => {
   const [description, setDescription] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleDescriptionChange = async (e) => {
     setDescription(e.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
+    setApiResponse((prevState) => ({ ...prevState, isLoading: true }));
 
-    generateRegex(description, `files/${fileData.fileName}`)
-      .then((data) => {
-        setApiResponse({
-          success: true,
-          message: data.message,
-        });
-        handleFetchNewData(data.new_url);
-      })
-      .catch((error) => {
-        console.error("Error submitting the description:", error);
-        setApiResponse({
-          success: false,
-          message: "Failed to process the request.",
-        });
-      })
-      .finally(() => {
-        setIsLoading(false);
+    try {
+      const data = await generateRegex(
+        description,
+        `files/${fileData.fileName}`
+      );
+      setApiResponse({
+        isLoading: false,
+        success: true,
+        message: data.message,
       });
+      toast.success("Data processed successfully!");
+
+      handleFetchNewData(data.new_url);
+    } catch (error) {
+      console.error(error);
+      setApiResponse({
+        isLoading: false,
+        success: false,
+        message: error.message || "Failed to process the request.",
+      });
+      console.log(apiResponse);
+      setDialogOpen(true);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <FileUploader setFileData={setFileData} />
-      <Typography variant="body1">
+      <Typography variant="body1" className="text-left">
         Describe Your Pattern and Specify Replacement Value.
       </Typography>
-      <Typography variant="body2">
+      <Typography variant="body2" className="text-left">
         For example, "Find email addresses in the Email column and replace them
         with 'REDACTED'.".
       </Typography>
-      <Box sx={{ marginBottom: 2, marginTop: 2 }}>
+      <Box className="my-4">
         <TextField
           required
           label="Prompt"
@@ -72,9 +79,9 @@ const Form = ({
         type="submit"
         variant="contained"
         color="primary"
-        disabled={isLoading}
+        disabled={apiResponse.isLoading}
       >
-        {isLoading ? <CircularProgress size={24} /> : "Submit"}
+        {apiResponse.isLoading ? <CircularProgress size={24} /> : "Submit"}
       </Button>
     </form>
   );
