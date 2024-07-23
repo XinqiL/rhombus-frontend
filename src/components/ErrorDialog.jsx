@@ -14,7 +14,7 @@ const ErrorDialog = ({ dialogOpen, setDialogOpen, apiResponse }) => {
   };
 
   return (
-    <Dialog open={dialogOpen} onClose={handleClose}>
+    <Dialog open={dialogOpen} onClose={handleClose} className="min-w-[300px]">
       <DialogTitle>{"An Error Occurred"}</DialogTitle>
       <DialogContent>
         <DialogContentText>
