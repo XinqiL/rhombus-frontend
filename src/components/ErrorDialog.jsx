@@ -18,7 +18,7 @@ const ErrorDialog = ({ dialogOpen, setDialogOpen, apiResponse }) => {
       <DialogTitle>{"An Error Occurred"}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          {apiResponse.message} Please change a column name and try again.
+          {apiResponse.message} <br /> Please try again.
         </DialogContentText>
       </DialogContent>
       <DialogActions>

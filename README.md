@@ -68,7 +68,9 @@ VITE_API_URL="/api"
 
 These values can be found in your Firebase project settings under the "General" tab and then under "Your apps" section.
 
-## Step4: Run the Development Server
+## Step4: Install and Run the Development Server
+
+`npm install`
 
 `npm run dev`
 
